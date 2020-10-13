@@ -9,6 +9,7 @@
     <title>XSS</title>
 
     <link rel="stylesheet" type="text/css" href="vendors/bootstrap.min.css">
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.1.1/purify.min.js" integrity="sha512-MyuIiR29IQaNvgQIvGVvOwtphjY82+ZoeopFcOyXrdsFbIiU6Sc3MRvpXRzOYtihMs83vT/rz8ArCM53l5Onqg==" crossorigin="anonymous"></script>-->
     <script type="text/javascript" src="vendors/purify.min.js"></script>
 </head>
 
@@ -78,6 +79,8 @@
 
     <script>
 
+        // var clean = DOMPurify.sanitize(dirty);
+
         // General URL settings (boring stuff)
 
         const url = document.location.search;
@@ -102,19 +105,7 @@
         input.addEventListener("input", updateValue);
 
         function updateValue(e) {
-            log.innerHTML = escapeHtml(e.target.value);
-        }
-        
-        function escapeHtml(text) {
-            var map = {
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#039;'
-            };
-
-            return text.replace(/[&<>"']/g, function (m) { return map[m]; });
+            log.textContent = e.target.value;
         }
 
         //  XSS vulnerability #3
@@ -126,7 +117,7 @@
         showButton.addEventListener("click", showHTML);
 
         function showHTML() {
-            htmlOutput.innerHTML = escapeHtml(htmlInput.value);
+            htmlOutput.textContent = htmlInput.value;
         }
 
         //  XSS vulnerability #4
